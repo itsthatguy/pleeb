@@ -13,10 +13,12 @@ module.exports = [
     }
   },
   {
+    in_progress: true,
     route: '/es2015/{username}',
     method: 'GET',
     code: 200,
     timeout: 1000,
+    defaultRequest: {params: {username: 'foo'}},
     response: (request) => {
       return {
         "data": {

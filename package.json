@@ -19,7 +19,8 @@
     "event-stream": "^3.3.4",
     "glob-stream": "^6.1.0",
     "glob-watcher": "^3.1.0",
-    "hapi": "^16.1.0"
+    "hapi": "^16.1.0",
+    "string-template": "^1.0.0"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/__tests__/test-setup.js",
