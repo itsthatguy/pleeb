@@ -4,19 +4,39 @@ import eventStream from 'event-stream';
 import Hapi        from 'hapi';
 import watch       from 'glob-watcher';
 import appRootDir  from 'app-root-dir';
-import {defaults}  from 'lodash';
 
 var server;
 
 const serverDefaults = {
   baseDir: appRootDir.get(),
-  src: './__mocks__/**/*.js'
+  src: './__mocks__/**/*.js',
+  timeout: null,
+  watch: true,
+};
+
+var pleebOptions;
+function setOptions (options) {
+  let mergedOptions = {
+    ...serverDefaults,
+    ...options
+  };
+
+  if (process.env.NODE_ENV === 'test') {
+    mergedOptions = {
+      ...mergedOptions,
+      src: `./__tests__/app/__mocks__/**/*.js`,
+      timeout: 0,
+      watch: false,
+    };
+  }
+
+  pleebOptions = mergedOptions;
 };
 
 const Pleeb = {
   start: (options = serverDefaults) => {
-    let mergedOptions = defaults(options, serverDefaults);
-    let srcGlob = path.join(mergedOptions.baseDir, mergedOptions.src);
+    setOptions(options);
+    let srcGlob = path.join(pleebOptions.baseDir, pleebOptions.src);
 
     server = createServer();
     setupRoutes(srcGlob);
@@ -24,7 +44,7 @@ const Pleeb = {
     return new Promise((resolve) => {
       server.on('start', (event) => {
         console.log('Mock server running at:', server.info.uri);
-        if (mergedOptions.watch) setupWatch(srcGlob);
+        if (pleebOptions.watch) setupWatch(srcGlob);
         resolve(server);
       });
     });
@@ -54,19 +74,20 @@ function forceRequireFile (filepath) {
   if (require.cache[filepath]) {
     delete require.cache[filepath];
   }
-  return require(filepath);
+  let fileContents = require(filepath);
+  return fileContents.default || fileContents;
 }
 
 function read (file) {
   var fileContents = forceRequireFile(file.path);
-  fileContents.default.map((endpoint) => {
+  fileContents.map((endpoint) => {
     server.route({
       method: endpoint.method,
       path: endpoint.route,
       handler: (request, reply) => {
         setTimeout(() => {
           reply(endpoint.response(request)).code(endpoint.code);
-        }, endpoint.timeout || 0);
+        }, pleebOptions.timeout || endpoint.timeout || 0);
       }
     });
   });
