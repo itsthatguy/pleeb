@@ -10,24 +10,26 @@ var server;
 
 const serverDefaults = {
   baseDir: appRootDir.get(),
-  src: './__tests__/app/__mocks__/**/*.js'
+  src: './__mocks__/**/*.js'
 };
 
-export function startServer (options = serverDefaults) {
-  let mergedOptions = defaults(options, serverDefaults);
-  let srcGlob = path.join(mergedOptions.baseDir, mergedOptions.src);
+const Pleeb = {
+  start: (options = serverDefaults) => {
+    let mergedOptions = defaults(options, serverDefaults);
+    let srcGlob = path.join(mergedOptions.baseDir, mergedOptions.src);
 
-  server = createServer();
-  setupRoutes(srcGlob);
+    server = createServer();
+    setupRoutes(srcGlob);
 
-  return new Promise((resolve) => {
-    server.on('start', (event) => {
-      console.log('Mock server running at:', server.info.uri);
-      if (mergedOptions.watch) setupWatch(srcGlob);
-      resolve(server);
+    return new Promise((resolve) => {
+      server.on('start', (event) => {
+        console.log('Mock server running at:', server.info.uri);
+        if (mergedOptions.watch) setupWatch(srcGlob);
+        resolve(server);
+      });
     });
-  });
-}
+  }
+};
 
 function createServer () {
   server = new Hapi.Server();
@@ -73,3 +75,5 @@ function read (file) {
 function end () {
   server.start();
 }
+
+export default Pleeb;
