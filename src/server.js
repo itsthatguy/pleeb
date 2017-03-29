@@ -1,22 +1,29 @@
 import gs          from 'glob-stream';
+import path        from 'path';
 import eventStream from 'event-stream';
 import Hapi        from 'hapi';
 import watch       from 'glob-watcher';
+import appRootDir  from 'app-root-dir';
+import {defaults}  from 'lodash';
 
 var server;
 
 const serverDefaults = {
-  src: '../__tests__/app/mocks'
+  baseDir: appRootDir.get(),
+  src: './__tests__/app/__mocks__/**/*.js'
 };
 
 export function startServer (options = serverDefaults) {
+  let mergedOptions = defaults(options, serverDefaults);
+  let srcGlob = path.join(mergedOptions.baseDir, mergedOptions.src);
+
   server = createServer();
-  setupRoutes(options.src);
+  setupRoutes(srcGlob);
 
   return new Promise((resolve) => {
     server.on('start', (event) => {
       console.log('Mock server running at:', server.info.uri);
-      if (options.watch) setupWatch(options.src);
+      if (mergedOptions.watch) setupWatch(srcGlob);
       resolve(server);
     });
   });
