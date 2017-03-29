@@ -1,6 +1,6 @@
 {
   "name": "pleeb",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Mock server for decoupled front-end development",
   "main": "lib/server.js",
   "scripts": {
