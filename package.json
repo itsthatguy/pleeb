@@ -4,7 +4,8 @@
   "description": "Mock server for decoupled front-end development",
   "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "babel-node index.js",
+    "test": "$(npm bin)/jest"
   },
   "author": "Kevin Altman <kevin@itsthatguy.com>",
   "license": "MIT",
@@ -19,6 +20,7 @@
     "hapi": "^16.1.0"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/test-setup.js",
     "testRegex": "/__tests__/.*spec\\.js$",
     "verbose": true
   },

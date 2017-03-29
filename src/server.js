@@ -1,9 +1,45 @@
-import gulp        from 'gulp';
+import gs          from 'glob-stream';
 import eventStream from 'event-stream';
 import Hapi        from 'hapi';
-import watch       from 'gulp-watch';
+import watch       from 'glob-watcher';
 
 var server;
+
+const serverDefaults = {
+  src: '../__tests__/app/mocks'
+};
+
+export function startServer (options = serverDefaults) {
+  server = createServer();
+  setupRoutes(options.src);
+
+  return new Promise((resolve) => {
+    server.on('start', (event) => {
+      console.log('Mock server running at:', server.info.uri);
+      if (options.watch) setupWatch(options.src);
+      resolve(server);
+    });
+  });
+}
+
+function createServer () {
+  server = new Hapi.Server();
+  server.connection({port: 9000});
+  return server;
+}
+
+function setupRoutes (src) {
+  gs(src)
+  .pipe(eventStream.through(read, end));
+}
+
+function setupWatch (src) {
+  watch(src, (done) => {
+    console.log('Restarting Mock server');
+    server.stop(startServer);
+    done();
+  });
+}
 
 function forceRequireFile (filepath) {
   if (require.cache[filepath]) {
@@ -28,23 +64,5 @@ function read (file) {
 }
 
 function end () {
-  server.start(() => {
-    console.log('Mock server running at:', server.info.uri);
-  });
+  server.start();
 }
-
-gulp.task('mock:routes', () => {
-  server = new Hapi.Server();
-  server.connection({port: 8090});
-  gulp.src(`./mocks/**/*.js`)
-  .pipe(eventStream.through(read, end));
-});
-
-gulp.task('mock', ['mock:routes'], () => {
-  watch(`./mocks/**/*.js`, () => {
-    console.log('Restarting Mock server');
-    server.stop(() => {
-      gulp.start('mock:routes');
-    });
-  });
-});

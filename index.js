@@ -1,4 +1,3 @@
-import gulp from 'gulp';
-import './src/server';
+import {startServer} from './src/server';
 
-gulp.start('mock');
+startServer();
