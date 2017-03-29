@@ -11,5 +11,18 @@ export default [
         }
       }
     }
+  },
+  {
+    route: '/default/{username}',
+    method: 'GET',
+    code: 200,
+    timeout: 1000,
+    response: (request) => {
+      return {
+        "data": {
+          "title": `My Awesome Test Mock, ${request.params.username}!`
+        }
+      }
+    }
   }
 ];

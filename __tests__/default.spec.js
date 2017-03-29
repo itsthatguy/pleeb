@@ -18,7 +18,7 @@ describe('default', () => {
     server.stop();
   });
 
-  it('GET', async () => {
+  it('GET /default', async () => {
     let request = await fetch('http://localhost:9000/default')
     .then(response => {
       return response.json();
@@ -28,5 +28,17 @@ describe('default', () => {
     });
 
     expect(request).toEqual({data: {title: 'My Awesome Test Mock, Dude!'}});
+  });
+
+  it('GET /default/fred', async () => {
+    let request = await fetch('http://localhost:9000/default/fred')
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
+    expect(request).toEqual({data: {title: 'My Awesome Test Mock, fred!'}});
   });
 });
