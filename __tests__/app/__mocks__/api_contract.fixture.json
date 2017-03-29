@@ -1,0 +1,46 @@
+[
+  [
+    {
+      "route": "/default",
+      "method": "GET",
+      "in_progress": false,
+      "payload": {
+        "data": {
+          "title": "My Awesome Test Mock, Dude!"
+        }
+      }
+    },
+    {
+      "route": "/default/foo",
+      "method": "GET",
+      "in_progress": false,
+      "payload": {
+        "data": {
+          "title": "My Awesome Test Mock, foo!"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "route": "/es2015",
+      "method": "GET",
+      "in_progress": false,
+      "payload": {
+        "data": {
+          "title": "My Awesome es2015 Test Mock, Dude!"
+        }
+      }
+    },
+    {
+      "route": "/es2015/foo",
+      "method": "GET",
+      "in_progress": true,
+      "payload": {
+        "data": {
+          "title": "My Awesome es2015 Test Mock, foo!"
+        }
+      }
+    }
+  ]
+]

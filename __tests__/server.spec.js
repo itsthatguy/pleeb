@@ -1,14 +1,13 @@
 import path        from 'path';
 import fetch from 'node-fetch';
-import Pleeb from '../src/server';
-import appRootDir  from 'app-root-dir';
+import Pleeb from '../src/index';
 
-describe('default', () => {
+describe('Server', () => {
   var server;
 
   beforeEach(async (done) => {
     server = await Pleeb.start({
-      src: `./__tests__/app/__mocks__/**/*.js`
+      src: `./__tests__/app/__mocks__/**/*.mock.js`
     });
 
     done();
