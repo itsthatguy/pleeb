@@ -8,7 +8,6 @@ import Hapi               from 'hapi';
 import watch              from 'glob-watcher';
 import appRootDir         from 'app-root-dir';
 import format             from 'string-template';
-import tap                from 'tap-stream';
 
 import {forceRequireFile} from './utils'
 
