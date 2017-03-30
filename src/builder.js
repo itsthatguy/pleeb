@@ -44,6 +44,8 @@ function read (file) {
 }
 
 function end (options, resolve) {
-  writeFileSync(path.join(options.baseDir, options.dest, 'api_contract.json'), JSON.stringify(contract, null, 2));
+  let contractPath = path.join(options.baseDir, options.dest, 'api_contract.json');
+  writeFileSync(contractPath, JSON.stringify(contract, null, 2));
+  console.log(`Api Contract generated at: ${path.join(options.baseDir, options.dest, 'api_contract.json')}`);
   resolve();
 }

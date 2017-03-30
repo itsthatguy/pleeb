@@ -40,7 +40,6 @@ class Pleeb {
 
   build (options = serverDefaults) {
     this.setOptions(options);
-    console.log('BUILD: ', this.options);
     return getRoutes(this.options);
   }
 
