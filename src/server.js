@@ -2,7 +2,6 @@ import gs          from 'glob-stream';
 import path        from 'path';
 import eventStream from 'event-stream';
 import Hapi        from 'hapi';
-import watch       from 'glob-watcher';
 import {forceRequireFile} from './utils';
 
 let server;
@@ -10,21 +9,19 @@ export function createServer (options) {
   server = new Hapi.Server();
   server.connection({port: 9000});
 
-  let srcGlob = path.join(options.baseDir, options.src);
-  let serverOptions = {
-    ...options,
-    srcGlob,
-  };
-
-  setupRoutes(serverOptions);
+  setupRoutes(options);
 
   return new Promise((resolve) => {
     server.on('start', (event) => {
-      console.log('Mock server running at:', server.info.uri);
-      if (options.watch) setupWatch(serverOptions);
+      console.log('[Pleeb] Mock server running at:', server.info.uri);
       resolve(server);
     });
   });
+}
+
+export function restartServer (options) {
+  console.log('[Pleeb] Restarting Mock server');
+  server.stop(() => createServer(options));
 }
 
 function setupRoutes (options) {
@@ -35,13 +32,6 @@ function setupRoutes (options) {
   ));
 }
 
-function setupWatch (options) {
-  watch(options.srcGlob, (done) => {
-    console.log('Restarting Mock server');
-    server.stop(startServer);
-    done();
-  });
-}
 
 function read (file, options) {
   var fileContents = forceRequireFile(file.path);
