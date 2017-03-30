@@ -2,7 +2,7 @@
   "name": "pleeb",
   "version": "0.1.0",
   "description": "Mock server for decoupled front-end development",
-  "main": "lib/server.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src/ -d lib --copy-files",
     "prepublish": "npm run build",
