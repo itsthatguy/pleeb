@@ -1,7 +1,7 @@
-import gs          from 'glob-stream';
-import path        from 'path';
-import eventStream from 'event-stream';
-import Hapi        from 'hapi';
+import gs                 from 'glob-stream';
+import path               from 'path';
+import eventStream        from 'event-stream';
+import Hapi               from 'hapi';
 import {forceRequireFile} from './utils';
 
 let server;
