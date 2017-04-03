@@ -1,7 +1,7 @@
+import decache from 'decache';
+
 export function forceRequireFile (filepath) {
-  if (require.cache[filepath]) {
-    delete require.cache[filepath];
-  }
+  decache(filepath);
   let fileContents = require(filepath);
   return fileContents.default || fileContents;
 }

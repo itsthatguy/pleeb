@@ -7,9 +7,9 @@ import {getRoutes}                   from './builder';
 const DEFAULTS = {
   baseDir: appRootDir.get(),
   dest: `./`,
-  src: './__mocks__/**/*.js',
+  src: './__mocks__/**/*.mock.js',
   timeout: null,
-  watch: true,
+  watch: './__mocks__/**/*.js',
 };
 
 const TEST_DEFAULTS = {
@@ -59,7 +59,7 @@ class Pleeb {
   }
 
   watchMocks (options) {
-    watch(options.srcGlob, (done) => {
+    watch(options.watch || options.src, (done) => {
       restartServer(options);
       this.build(options);
       done();

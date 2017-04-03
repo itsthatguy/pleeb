@@ -3,3 +3,5 @@ global.console = {
   error: jest.fn(),
   warn: jest.fn(),
 };
+
+jest.mock('decache');

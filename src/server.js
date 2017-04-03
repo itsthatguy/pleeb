@@ -36,7 +36,7 @@ function setupRoutes (options) {
 function read (file, options) {
   var fileContents = forceRequireFile(file.path);
   fileContents.map((endpoint) => {
-    server.route({
+    let config = {
       method: endpoint.method,
       path: endpoint.route,
       handler: (request, reply) => {
@@ -44,7 +44,9 @@ function read (file, options) {
           reply(endpoint.response(request)).code(endpoint.code);
         }, options.timeout || endpoint.timeout || 0);
       }
-    });
+    };
+
+    server.route(config);
   });
 }
 
