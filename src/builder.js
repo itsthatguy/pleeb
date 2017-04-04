@@ -37,12 +37,17 @@ function read (file, options) {
   let transformedEndpoints = fileContents.map((endpoint) => {
     let request = endpoint.defaultRequest || {};
 
-    return {
+    let transformedEndpoint = {
       route: formattedRoute(endpoint.route, request.params),
       method: endpoint.method,
+      authenticated: endpoint.authenticated || true,
       in_progress: endpoint.in_progress || false,
       payload: endpoint.response(request)
     };
+
+    if (endpoint.defaultRequest) transformedEndpoint.defaultRequest = endpoint.defaultRequest;
+
+    return transformedEndpoint;
   });
 
   contract.push(flatten(transformedEndpoints));
