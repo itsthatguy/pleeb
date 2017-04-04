@@ -40,7 +40,7 @@ function read (file, options) {
     let transformedEndpoint = {
       route: formattedRoute(endpoint.route, request.params),
       method: endpoint.method,
-      authenticated: endpoint.authenticated || true,
+      headers: endpoint.headers || {},
       in_progress: endpoint.in_progress || false,
       payload: endpoint.response(request)
     };
