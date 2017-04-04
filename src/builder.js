@@ -45,7 +45,7 @@ function read (file, options) {
       payload: endpoint.response(request)
     };
 
-    transformedEndpoint.defaultRequest = endpoint.defaultRequest if endpoint.defaultRequest;
+    if (endpoint.defaultRequest) transformedEndpoint.defaultRequest = endpoint.defaultRequest;
 
     return transformedEndpoint;
   });
