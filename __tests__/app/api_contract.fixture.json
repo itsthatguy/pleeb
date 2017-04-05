@@ -2,6 +2,7 @@
   {
     "route": "/default",
     "method": "GET",
+    "headers": {},
     "in_progress": false,
     "payload": {
       "data": {
@@ -12,7 +13,13 @@
   {
     "route": "/default/foo",
     "method": "GET",
+    "headers": {},
     "in_progress": false,
+    "defaultRequest": {
+      "params": {
+        "username": "foo"
+      }
+    },
     "payload": {
       "data": {
         "title": "My Awesome Test Mock, foo!"
@@ -22,6 +29,7 @@
   {
     "route": "/es2015",
     "method": "GET",
+    "headers": {},
     "in_progress": false,
     "payload": {
       "data": {
@@ -32,7 +40,13 @@
   {
     "route": "/es2015/foo",
     "method": "GET",
+    "headers": {},
     "in_progress": true,
+    "defaultRequest": {
+      "params": {
+        "username": "foo"
+      }
+    },
     "payload": {
       "data": {
         "title": "My Awesome es2015 Test Mock, foo!"

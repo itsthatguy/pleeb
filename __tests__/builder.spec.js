@@ -4,7 +4,7 @@ import path         from 'path';
 import Pleeb        from '../src/index';
 
 const contractPath = path.join(appRootDir.get(), './__tests__/app/api_contract.json');
-const contractFixturePath = path.join(appRootDir.get(), './__tests__/app/api_contract.json');
+const contractFixturePath = path.join(appRootDir.get(), './__tests__/app/api_contract.fixture.json');
 
 describe('Builder', () => {
   beforeEach(async (done) => {
