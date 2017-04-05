@@ -1,5 +1,6 @@
 [
   {
+    "source_mock": "__tests__/app/__mocks__/default.mock.js",
     "route": "/default",
     "method": "GET",
     "headers": {},
@@ -11,6 +12,7 @@
     }
   },
   {
+    "source_mock": "__tests__/app/__mocks__/default.mock.js",
     "route": "/default/foo",
     "method": "GET",
     "headers": {},
@@ -27,6 +29,7 @@
     }
   },
   {
+    "source_mock": "__tests__/app/__mocks__/es2015.mock.js",
     "route": "/es2015",
     "method": "GET",
     "headers": {},
@@ -38,6 +41,7 @@
     }
   },
   {
+    "source_mock": "__tests__/app/__mocks__/es2015.mock.js",
     "route": "/es2015/foo",
     "method": "GET",
     "headers": {},

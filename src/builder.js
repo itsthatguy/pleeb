@@ -38,6 +38,7 @@ function read (file, options) {
     let request = endpoint.defaultRequest || {};
 
     let transformedEndpoint = {
+      source_mock: path.relative(options.baseDir, file.path),
       route: formattedRoute(endpoint.route, request.params),
       method: endpoint.method,
       headers: endpoint.headers || {},
