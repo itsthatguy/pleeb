@@ -7,7 +7,7 @@ import {forceRequireFile} from './utils';
 let server;
 export function createServer (options) {
   server = new Hapi.Server();
-  server.connection({port: 9000});
+  server.connection({port: 9000, routes: {cors: true}});
 
   setupRoutes(options);
 
